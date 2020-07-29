@@ -1,9 +1,15 @@
 import {ScaledSheet} from 'react-native-size-matters';
-import {whiteColor, timeBackgroud, blackColor} from '../../Utils';
+import {
+  whiteColor,
+  timeBackgroud,
+  blackColor,
+  primaryColor,
+  secondaryColor,
+} from '../../Utils';
 export default ({level}) => {
   return ScaledSheet.create({
     container: {
-      backgroundColor: '#cfeefa',
+      backgroundColor: primaryColor,
       flex: 1,
     },
     input: {
@@ -96,6 +102,9 @@ export default ({level}) => {
     instructionText: {
       textAlign: 'center',
       maxWidth: '90%',
+    },
+    button: {
+      backgroundColor: secondaryColor,
     },
   });
 };

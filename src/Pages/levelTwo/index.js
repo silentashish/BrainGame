@@ -182,7 +182,7 @@ const GamePage = ({
     <View style={styles.container}>
       {/* Safe are is for ios and appheader show game name and level */}
       <SafeAreaView backgroundColor={secondaryColor} opacity={0.95} />
-      <AppHeader title="Memory Game" subTitle={`Level ${level}`} />
+      <AppHeader title="NumPie" subTitle={`Level ${level}`} />
 
       <Divider small />
 
@@ -234,12 +234,12 @@ const GamePage = ({
           <View style={styles.centerButton}>
             {submitted ? (
               <>
-                <Button onPress={onNextAction}>
+                <Button style={styles.button} onPress={onNextAction}>
                   <Text>Next</Text>
                 </Button>
               </>
             ) : (
-              <Button onPress={onSubmitAction}>
+              <Button style={styles.button} onPress={onSubmitAction}>
                 <Text>Submit</Text>
               </Button>
             )}

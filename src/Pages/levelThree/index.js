@@ -232,12 +232,12 @@ const GamePage = ({
           <View style={styles.centerButton}>
             {submitted ? (
               <>
-                <Button onPress={onNextAction}>
+                <Button style={styles.button} onPress={onNextAction}>
                   <Text>Next</Text>
                 </Button>
               </>
             ) : (
-              <Button onPress={onSubmitAction}>
+              <Button style={styles.button} onPress={onSubmitAction}>
                 <Text>Submit</Text>
               </Button>
             )}
