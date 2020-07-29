@@ -10,7 +10,7 @@ export default (props) => {
   return (
     <View style={styles.mainView}>
       <View style={styles.centerElement}>
-        <Text style={styles.bigText}>Welcome to Word Brain</Text>
+        <Text style={styles.bigText}>Welcome to Brain Game</Text>
         <Text style={styles.bigText}></Text>
         <View style={styles.animationBox}>
           <LottieView

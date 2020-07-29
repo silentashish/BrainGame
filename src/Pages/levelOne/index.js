@@ -14,17 +14,22 @@ import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import Input from './Input';
 
-const viewTime = 20;
+const viewTime = 5;
+const numberOfItem = 3;
 
-const TimeView = ({time}) => (
-  <View style={_styles().timerView}>
-    {[...time.toString()].map((item) => (
-      <View style={_styles().timeBox}>
-        <Text style={_styles().time}>{item}</Text>
-      </View>
-    ))}
-  </View>
-);
+const TimeView = ({time}) => {
+  //  import styles here
+  const styles = _styles({level: 1});
+  return (
+    <View style={styles.timerView}>
+      {[...time.toString()].map((item) => (
+        <View style={styles.timeBox}>
+          <Text style={styles.time}>{item}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 const GamePage = ({
   level,
@@ -37,7 +42,7 @@ const GamePage = ({
   ClearScore,
 }) => {
   //  import styles here
-  const styles = _styles();
+  const styles = _styles({level: 1});
 
   // if timer for showing number is end
   const [showTimerEnd, setShowTimerEnd] = useState(false);
@@ -61,7 +66,7 @@ const GamePage = ({
     React.useCallback(() => {
       let isActive = true;
 
-      ChangeData(6);
+      ChangeData(numberOfItem);
       // initialize state values
       setProblem(0);
       setTime(viewTime);
@@ -119,18 +124,19 @@ const GamePage = ({
   const onNextAction = () => {
     // if level reached 5 check for completion
     if (problem === 5) {
-      if (score > 21) {
+      if (score > 9) {
         ClearScore();
+        IncreaseLevel();
         return navigation.navigate('SuccessScreen', {level: 1});
       } else {
         ClearScore();
-        return navigation.navigate('FailedScreen', {level: 1, threshold: 21});
+        return navigation.navigate('FailedScreen', {level: 1, threshold: 10});
       }
     }
     // increase problem value
     setProblem((problem) => problem + 1);
     // change data redux action
-    ChangeData(6);
+    ChangeData(numberOfItem);
     // reset time
     setTime(viewTime);
     // set timer end to false

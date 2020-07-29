@@ -6,6 +6,9 @@ const gameReducer = (state = InitialState, action) => {
     case 'Increase_Level':
       return {...state, level: state.level + 1};
 
+    case 'Clear_Level':
+      return {...state, level: 1};
+
     case 'Increase_Score':
       return {...state, scoreTotal: state.scoreTotal + action.value};
 

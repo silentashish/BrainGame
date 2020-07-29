@@ -1,5 +1,7 @@
 export const IncreaseLevel = () => ({type: 'Increase_Level'});
 
+export const ClearLevel = () => ({type: 'Clear_Level'});
+
 export const ChangeData = (number) => ({
   type: 'Change_Data',
   data: GenerateArray(number),

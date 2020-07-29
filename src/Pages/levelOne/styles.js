@@ -1,6 +1,6 @@
 import {ScaledSheet} from 'react-native-size-matters';
 import {whiteColor, timeBackgroud, blackColor} from '../../Utils';
-export default () => {
+export default ({level}) => {
   return ScaledSheet.create({
     container: {
       backgroundColor: '#cfeefa',
@@ -38,7 +38,8 @@ export default () => {
       alignItems: 'center',
     },
     boxContainer: {
-      height: '200@vs',
+      height:
+        level && level === 1 ? '150@vs' : level === 3 ? '275@vs' : '200@vs',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '5@s',

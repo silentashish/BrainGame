@@ -1,19 +1,36 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList} from 'react-native';
+import {View, SafeAreaView, FlatList, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import {
   IncreaseLevel,
   ChangeData,
-  UpdateValue,
   IncreaseScore,
+  ClearScore,
 } from '../../Redux/actions';
 import _styles from '../levelOne/styles';
 import {AppHeader, Divider} from '../../Component';
 import {secondaryColor} from '../../Utils';
-import {Button, Text, Input, Item, Content, Label} from 'native-base';
+import {Button, Text, Item, Content, Label} from 'native-base';
+import {useFocusEffect} from '@react-navigation/native';
+import Input from '../levelOne/Input';
 
-const viewTime = 5;
-const inputTime = 10;
+const viewTime = 25;
+const numberOfItem = 9;
+const threshold = 30;
+
+const TimeView = ({time}) => {
+  //  import styles here
+  const styles = _styles({level: 2});
+  return (
+    <View style={styles.timerView}>
+      {[...time.toString()].map((item) => (
+        <View style={styles.timeBox}>
+          <Text style={styles.time}>{item}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 const GamePage = ({
   level,
@@ -21,11 +38,13 @@ const GamePage = ({
   score,
   IncreaseLevel,
   ChangeData,
-  UpdateValue,
   IncreaseScore,
+  navigation,
+  ClearScore,
+  ClearLevel,
 }) => {
   //  import styles here
-  const styles = _styles();
+  const styles = _styles({level: 3});
 
   // if timer for showing number is end
   const [showTimerEnd, setShowTimerEnd] = useState(false);
@@ -44,6 +63,25 @@ const GamePage = ({
 
   // current level score
   const [scoreLevel, setScoreLevel] = useState(0);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+
+      ChangeData(numberOfItem);
+      // initialize state values
+      setProblem(0);
+      setTime(viewTime);
+      setSubmitted(false);
+      setTimerRunning(true);
+      setShowTimerEnd(false);
+      setInputTimerEnd(false);
+
+      return () => {
+        isActive = false;
+      };
+    }, []),
+  );
 
   // manage timer in here
   useEffect(() => {
@@ -66,20 +104,9 @@ const GamePage = ({
 
   // this execute when time is finished
   const TimeFinishAction = () => {
-    if (showTimerEnd) {
-      setInputTimerEnd(true);
-      onSubmitAction();
-    } else {
-      setShowTimerEnd(true);
-      setTime(inputTime);
-      setTimerRunning(true);
-    }
+    setShowTimerEnd(true);
+    setTime(0);
   };
-
-  // load data of 3 when game is started
-  useEffect(() => {
-    ChangeData(6);
-  }, []);
 
   const onSubmitAction = () => {
     setSubmitted(true);
@@ -97,13 +124,21 @@ const GamePage = ({
   };
 
   const onNextAction = () => {
+    // if level reached 5 check for completion
     if (problem === 5) {
-      return navigation.navigate();
+      if (score > threshold - 1) {
+        ClearScore();
+        ClearLevel();
+        return navigation.navigate('SuccessScreen', {level: 3});
+      } else {
+        ClearScore();
+        return navigation.navigate('FailedScreen', {level: 3, threshold});
+      }
     }
     // increase problem value
     setProblem((problem) => problem + 1);
     // change data redux action
-    ChangeData(6);
+    ChangeData(numberOfItem);
     // reset time
     setTime(viewTime);
     // set timer end to false
@@ -114,20 +149,6 @@ const GamePage = ({
     setSubmitted(false);
   };
 
-  const InputComponent = ({submit, value, inputvalue, index}) => (
-    <Input
-      blurOnSubmit={false}
-      keyboardType="numeric"
-      placeholder=""
-      value={inputvalue}
-      style={[
-        styles.inputText,
-        submit && value !== parseInt(inputvalue) && styles.errorStyle,
-      ]}
-      onChangeText={(val) => UpdateValue(val, index)}
-    />
-  );
-
   const InfoView = ({lable, children}) => (
     <View style={styles.infoBox}>
       <Text style={styles.lable}>{lable}</Text>
@@ -135,7 +156,7 @@ const GamePage = ({
     </View>
   );
 
-  const Item = ({children, index, timeEnd, input, submitted}) => (
+  const Item = ({children, index, timeEnd, submitted}) => (
     <View
       style={[
         styles.viewBox,
@@ -145,7 +166,11 @@ const GamePage = ({
           ? styles.leftPad
           : styles.rightPad,
       ]}>
-      {timeEnd ? input : <Text style={styles.txt}>{children}</Text>}
+      {timeEnd ? (
+        <Input index={index} submit={submitted} />
+      ) : (
+        <Text style={styles.txt}>{children}</Text>
+      )}
     </View>
   );
 
@@ -167,13 +192,7 @@ const GamePage = ({
       <Divider small />
 
       {/* timer showing filed lie on top   */}
-      <View style={styles.timerView}>
-        {[...time.toString()].map((item) => (
-          <View style={styles.timeBox}>
-            <Text style={styles.time}>{item}</Text>
-          </View>
-        ))}
-      </View>
+      <TimeView time={time} />
 
       <View style={styles.instruction}>
         <Text style={styles.instructionText}>
@@ -185,25 +204,14 @@ const GamePage = ({
       <View style={styles.boxContainer}>
         <SafeAreaView style={{flex: 1}}>
           <FlatList
-            key={3}
+            removeClippedSubviews={false}
             ItemSeparatorComponent={ItemSepretor}
-            extraData={data.length}
+            extraData={data}
             numColumns={3}
             keyExtractor={(item) => item.value.toString()}
             data={data}
             renderItem={({item, index}) => (
-              <Item
-                submitted={submitted}
-                index={index}
-                timeEnd={showTimerEnd}
-                input={
-                  <InputComponent
-                    inputvalue={item.inputvalue}
-                    index={index}
-                    submit={submitted}
-                    value={item.value}
-                  />
-                }>
+              <Item submitted={submitted} index={index} timeEnd={showTimerEnd}>
                 {showTimerEnd ? item.inputvalue : item.value}
               </Item>
             )}
@@ -256,11 +264,14 @@ const mapDispatchToProps = (dispatch) => {
     ChangeData: (num) => {
       dispatch(ChangeData(num));
     },
-    UpdateValue: (value, index) => {
-      dispatch(UpdateValue(value, index));
-    },
     IncreaseScore: (value) => {
       dispatch(IncreaseScore(value));
+    },
+    ClearScore: () => {
+      dispatch(ClearScore());
+    },
+    ClearLevel: () => {
+      dispatch(ClearScore());
     },
   };
 };
