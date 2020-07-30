@@ -6,19 +6,17 @@ import {UpdateValue} from '../../Redux/actions';
 
 const Input = ({submit, index, data, UpdateValue}) => {
   const {value, inputvalue} = data[index];
-  const [input, setInput] = useState(inputvalue);
   const styles = _styles({level: 1});
   return (
     <TextInput
-      onBlur={() => UpdateValue(input, index)}
       keyboardType="numeric"
       placeholder=""
-      value={input}
+      value={inputvalue}
       style={[
         styles.inputText,
         submit && value !== parseInt(inputvalue) && styles.errorStyle,
       ]}
-      onChangeText={(val) => setInput(val)}
+      onChangeText={(val) => UpdateValue(val, index)}
     />
   );
 };
