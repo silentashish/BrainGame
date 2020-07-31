@@ -6,13 +6,14 @@ import {
   ChangeData,
   IncreaseScore,
   ClearScore,
+  UpdateValue,
+  ClearLevel,
 } from '../../Redux/actions';
 import _styles from '../levelOne/styles';
 import {AppHeader, Divider} from '../../Component';
 import {secondaryColor} from '../../Utils';
 import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
-import Input from '../levelOne/Input';
 
 const viewTime = 25;
 const numberOfItem = 9;
@@ -20,7 +21,7 @@ const threshold = 30;
 
 const TimeView = ({time}) => {
   //  import styles here
-  const styles = _styles({level: 2});
+  const styles = _styles({level: 1});
   return (
     <View style={styles.timerView}>
       {[...time.toString()].map((item) => (
@@ -41,6 +42,7 @@ const GamePage = ({
   IncreaseScore,
   navigation,
   ClearScore,
+  UpdateValue,
   ClearLevel,
 }) => {
   //  import styles here
@@ -129,10 +131,10 @@ const GamePage = ({
       if (score > threshold - 1) {
         ClearScore();
         ClearLevel();
-        return navigation.navigate('SuccessScreen', {level: 3});
+        return navigation.navigate('SuccessScreen', {level: 1});
       } else {
         ClearScore();
-        return navigation.navigate('FailedScreen', {level: 3, threshold});
+        return navigation.navigate('FailedScreen', {level: 1, threshold});
       }
     }
     // increase problem value
@@ -156,31 +158,13 @@ const GamePage = ({
     </View>
   );
 
-  const Item = ({children, index, timeEnd, submitted}) => (
-    <View
-      style={[
-        styles.viewBox,
-        index === 0
-          ? styles.leftPad
-          : index % 2 === 0
-          ? styles.leftPad
-          : styles.rightPad,
-      ]}>
-      {timeEnd ? (
-        <Input index={index} submit={submitted} />
-      ) : (
-        <Text style={styles.txt}>{children}</Text>
-      )}
-    </View>
-  );
-
   const ItemSepretor = () => <View style={styles.division} />;
 
   return (
     <View style={styles.container}>
       {/* Safe are is for ios and appheader show game name and level */}
       <SafeAreaView backgroundColor={secondaryColor} opacity={0.95} />
-      <AppHeader title="Memory Game" subTitle={`Level ${level}`} />
+      <AppHeader title="NumPie" subTitle={`Level ${level}`} />
 
       <Divider small />
 
@@ -204,16 +188,37 @@ const GamePage = ({
       <View style={styles.boxContainer}>
         <SafeAreaView style={{flex: 1}}>
           <FlatList
-            removeClippedSubviews={false}
             ItemSeparatorComponent={ItemSepretor}
             extraData={data}
             numColumns={3}
             keyExtractor={(item) => item.value.toString()}
             data={data}
             renderItem={({item, index}) => (
-              <Item submitted={submitted} index={index} timeEnd={showTimerEnd}>
-                {showTimerEnd ? item.inputvalue : item.value}
-              </Item>
+              <View
+                style={[
+                  styles.viewBox,
+                  index === 0
+                    ? styles.leftPad
+                    : index % 2 === 0
+                    ? styles.leftPad
+                    : styles.rightPad,
+                ]}>
+                {showTimerEnd ? (
+                  <TextInput
+                    style={[
+                      styles.inputText,
+                      submitted &&
+                        item.value !== parseInt(item.inputvalue) &&
+                        styles.errorStyle,
+                    ]}
+                    keyboardType="numeric"
+                    value={item.inputvalue}
+                    onChangeText={(val) => UpdateValue(val, index)}
+                  />
+                ) : (
+                  <Text style={styles.txt}>{item.value}</Text>
+                )}
+              </View>
             )}
           />
         </SafeAreaView>
@@ -271,7 +276,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(ClearScore());
     },
     ClearLevel: () => {
-      dispatch(ClearScore());
+      dispatch(ClearLevel());
+    },
+    UpdateValue: (value, index) => {
+      dispatch(UpdateValue(value, index));
     },
   };
 };

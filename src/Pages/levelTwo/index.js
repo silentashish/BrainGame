@@ -6,13 +6,13 @@ import {
   ChangeData,
   IncreaseScore,
   ClearScore,
+  UpdateValue,
 } from '../../Redux/actions';
 import _styles from '../levelOne/styles';
 import {AppHeader, Divider} from '../../Component';
 import {secondaryColor} from '../../Utils';
 import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
-import Input from '../levelOne/Input';
 
 const viewTime = 10;
 const numberOfItem = 6;
@@ -20,7 +20,7 @@ const threshold = 20;
 
 const TimeView = ({time}) => {
   //  import styles here
-  const styles = _styles({level: 2});
+  const styles = _styles({level: 1});
   return (
     <View style={styles.timerView}>
       {[...time.toString()].map((item) => (
@@ -41,6 +41,7 @@ const GamePage = ({
   IncreaseScore,
   navigation,
   ClearScore,
+  UpdateValue,
 }) => {
   //  import styles here
   const styles = _styles({level: 2});
@@ -128,13 +129,10 @@ const GamePage = ({
       if (score > threshold - 1) {
         ClearScore();
         IncreaseLevel();
-        return navigation.navigate('SuccessScreen', {level: 2});
+        return navigation.navigate('SuccessScreen', {level: 1});
       } else {
         ClearScore();
-        return navigation.navigate('FailedScreen', {
-          level: 2,
-          threshold,
-        });
+        return navigation.navigate('FailedScreen', {level: 1, threshold});
       }
     }
     // increase problem value
@@ -155,24 +153,6 @@ const GamePage = ({
     <View style={styles.infoBox}>
       <Text style={styles.lable}>{lable}</Text>
       <Text style={styles.value}>{children}</Text>
-    </View>
-  );
-
-  const Item = ({children, index, timeEnd, submitted}) => (
-    <View
-      style={[
-        styles.viewBox,
-        index === 0
-          ? styles.leftPad
-          : index % 2 === 0
-          ? styles.leftPad
-          : styles.rightPad,
-      ]}>
-      {timeEnd ? (
-        <Input index={index} submit={submitted} />
-      ) : (
-        <Text style={styles.txt}>{children}</Text>
-      )}
     </View>
   );
 
@@ -206,16 +186,37 @@ const GamePage = ({
       <View style={styles.boxContainer}>
         <SafeAreaView style={{flex: 1}}>
           <FlatList
-            removeClippedSubviews={false}
             ItemSeparatorComponent={ItemSepretor}
             extraData={data}
             numColumns={3}
             keyExtractor={(item) => item.value.toString()}
             data={data}
             renderItem={({item, index}) => (
-              <Item submitted={submitted} index={index} timeEnd={showTimerEnd}>
-                {showTimerEnd ? item.inputvalue : item.value}
-              </Item>
+              <View
+                style={[
+                  styles.viewBox,
+                  index === 0
+                    ? styles.leftPad
+                    : index % 2 === 0
+                    ? styles.leftPad
+                    : styles.rightPad,
+                ]}>
+                {showTimerEnd ? (
+                  <TextInput
+                    style={[
+                      styles.inputText,
+                      submitted &&
+                        item.value !== parseInt(item.inputvalue) &&
+                        styles.errorStyle,
+                    ]}
+                    keyboardType="numeric"
+                    value={item.inputvalue}
+                    onChangeText={(val) => UpdateValue(val, index)}
+                  />
+                ) : (
+                  <Text style={styles.txt}>{item.value}</Text>
+                )}
+              </View>
             )}
           />
         </SafeAreaView>
@@ -271,6 +272,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     ClearScore: () => {
       dispatch(ClearScore());
+    },
+    UpdateValue: (value, index) => {
+      dispatch(UpdateValue(value, index));
     },
   };
 };
