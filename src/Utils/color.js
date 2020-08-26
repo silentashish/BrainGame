@@ -1,0 +1,9 @@
+export const primaryColor = '#def2f1';
+export const secondaryColor = '#2b7178';
+export const blackColor = '#000';
+export const lightColor = '#2b7A78';
+export const whiteColor = '#fff';
+export const darkBackgroundColor = '#010101';
+export const overlayColor = '#1f2023';
+export const inputBoxColor = '#343434';
+export const timeBackgroud = '#1A3221';
