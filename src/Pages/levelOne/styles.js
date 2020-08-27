@@ -23,16 +23,16 @@ export default ({level}) => {
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: timeBackgroud,
-      height: '50@ms',
-      width: '50@ms',
-      borderRadius: 25,
+      height: '70@ms',
+      width: '70@ms',
+      borderRadius: '35@ms',
       margin: '3@ms',
     },
     time: {
       textAlign: 'center',
       color: whiteColor,
       fontWeight: 'bold',
-      fontSize: '30@ms',
+      fontSize: '35@ms',
     },
     viewBox: {
       backgroundColor: inputBoxColor,
@@ -112,7 +112,6 @@ export default ({level}) => {
     button: {
       backgroundColor: '#5c7829',
       borderRadius: '10@ms',
-
       alignSelf: 'center',
     },
   });

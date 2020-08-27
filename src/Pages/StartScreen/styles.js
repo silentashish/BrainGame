@@ -2,107 +2,56 @@ import {ScaledSheet} from 'react-native-size-matters';
 import {secondaryColor, primaryColor} from '../../Utils';
 
 export const styles = ScaledSheet.create({
-  InfoSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: '5@ms',
-  },
   mainView: {
     flex: 1,
-    backgroundColor: primaryColor,
+    backgroundColor: '#FECFEF',
   },
-  levelText: {
-    textAlign: 'center',
+  headerinfo: {
+    alignItems: 'center',
+    margin: '20@ms',
+  },
+  headerinfoText: {
     fontSize: '30@ms',
-    margin: '10@ms',
-  },
-  timeText: {
-    marginBottom: '5@ms',
-    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: '20@ms',
-  },
-  timesText: {
-    textAlign: 'center',
-    fontSize: '25@ms',
-    marginBottom: '5@ms',
-  },
-  problemIndex: {
-    textAlign: 'center',
-    fontSize: '20@ms',
-    fontWeight: 'bold',
-    marginBottom: '20@ms',
-  },
-  timeLifeView: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  oldAnswerView: {
-    flexDirection: 'row',
-    paddingRight: '25@ms',
-    paddingLeft: '25@ms',
-    marginBottom: '15@ms',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  oldAnswerSubView: {
-    borderRadius: '10@ms',
-    backgroundColor: '#a1a1a1',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingRight: '10@ms',
-    paddingLeft: '10@ms',
-    paddingTop: '3@ms',
-    paddingBottom: '3@ms',
-    minWidth: '100@ms',
-    marginRight: '5@ms',
-  },
-  itemText: {
-    fontSize: '20@ms',
-    textAlign: 'center',
-  },
-  lifeText: {
-    marginBottom: 5,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: '20@ms',
-    letterSpacing: 10,
-  },
-  heartView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: '5@ms',
-  },
-  instruction: {
-    marginHorizontal: '20@ms',
-    fontSize: '15@ms',
-    marginBottom: '20@ms',
-    textAlign: 'center',
-  },
-  divider: {
-    height: '10@ms',
   },
   animation: {
-    height: '200@vs',
+    height: '300@vs',
     width: '200@vs',
     justifyContent: 'center',
     alignItems: 'center',
   },
   animationBox: {
+    marginVertical: '10@ms',
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 3,
   },
-  bigText: {
-    fontSize: '30@ms',
-    textAlign: 'center',
+  instructionBox: {
+    alignItems: 'center',
+    flex: 2,
+    justifyContent: 'center',
+  },
+  instructionHead: {
     fontWeight: 'bold',
+    fontSize: '20@ms',
+    margin: '5@ms',
   },
-  centerElement: {
-    flex: 1,
+  instructionText: {
+    fontSize: '18@ms',
+  },
+  buttonBox: {flex: 1},
+  button: {
+    margin: '10@ms',
+    backgroundColor: '#fff',
+    elevation: 4,
+    height: '50@ms',
+    width: '100@ms',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: '5@ms',
   },
-  widthLess: {
-    maxWidth: '70%',
+  txt: {
+    fontSize: '20@ms',
   },
 });
