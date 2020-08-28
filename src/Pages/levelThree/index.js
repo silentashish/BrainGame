@@ -194,15 +194,16 @@ const GamePage = ({
         </Text>
         <Text style={styles.instructionText}>Watch out for the timer.</Text>
       </View>
-      <View style={styles.animationBox}>
-        <LottieView
-          source={require('../../assets/Animations/looking_owl.json')}
-          autoPlay
-          loop
-          style={styles.animation}
-        />
-      </View>
+
       <View style={styles.wrapper}>
+        <View style={styles.animationBox}>
+          <LottieView
+            source={require('../../assets/Animations/looking_owl.json')}
+            autoPlay
+            loop
+            style={styles.animation}
+          />
+        </View>
         <View style={styles.boxContainer}>
           <SafeAreaView style={{flex: 1}}>
             <FlatList

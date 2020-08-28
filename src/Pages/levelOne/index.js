@@ -204,7 +204,7 @@ const GamePage = ({
             source={require('../../assets/Animations/looking_owl.json')}
             autoPlay
             loop
-            style={styles.animation}
+            style={[styles.animation, styles.animation1]}
           />
         </View>
 

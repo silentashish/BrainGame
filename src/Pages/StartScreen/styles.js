@@ -4,7 +4,7 @@ import {secondaryColor, primaryColor} from '../../Utils';
 export const styles = ScaledSheet.create({
   mainView: {
     flex: 1,
-    backgroundColor: '#FECFEF',
+    backgroundColor: '#b2d9a3',
   },
   headerinfo: {
     alignItems: 'center',
@@ -42,7 +42,7 @@ export const styles = ScaledSheet.create({
   buttonBox: {flex: 1},
   button: {
     margin: '10@ms',
-    backgroundColor: '#fff',
+    backgroundColor: '#e89989',
     elevation: 4,
     height: '50@ms',
     width: '100@ms',

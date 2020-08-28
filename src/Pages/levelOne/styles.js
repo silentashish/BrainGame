@@ -101,7 +101,7 @@ export default ({level}) => {
     },
     problemBox: {
       flex: 1,
-      marginHorizontal: '15@ms',
+      marginHorizontal: '20@ms',
     },
     infoSection: {
       flexDirection: 'row',
@@ -135,10 +135,16 @@ export default ({level}) => {
       borderRadius: '20@ms',
     },
     animation: {
-      height: '80@vs',
+      height: '72@vs',
       width: '100@vs',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    animation1: {
+      height: '150@ms',
+    },
+    animation2: {
+      height: '120@ms',
     },
     animationBox: {
       marginVertical: '5@ms',

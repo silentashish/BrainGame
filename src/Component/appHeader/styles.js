@@ -8,7 +8,7 @@ export const styles = ScaledSheet.create({
     alignSelf: 'center',
     backgroundColor: '#404142',
     borderRadius: '3@ms',
-    margin: '5@ms',
+    margin: '10@ms',
     padding: '3@ms',
   },
   title: {
