@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {
+  TouchableOpacity,
   View,
   SafeAreaView,
   FlatList,
@@ -22,6 +23,7 @@ import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {timeBackgroud} from '../../Utils';
 import LottieView from 'lottie-react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const viewTime = 5;
 const numberOfItem = 3;
@@ -176,7 +178,6 @@ const GamePage = ({
 
       <Divider small />
 
-      {/* <View style={{flex: 1, justifyContent: 'center'}}> */}
       <View style={styles.infoSection}>
         <View style={styles.problemBox}>
           <InfoView lable={'Problem'}>{problem} | 5</InfoView>
@@ -185,12 +186,11 @@ const GamePage = ({
           <InfoView lable={'Score'}>{score}</InfoView>
         </View>
       </View>
-      {/* </View> */}
+
       <Divider small />
       {/* timer showing filed lie on top   */}
-      {/* <View style={{flex: 0.5, justifyContent: 'center', margin: 10}}> */}
+
       <TimeView time={time} />
-      {/* </View> */}
 
       <View style={styles.instruction}>
         <Text style={styles.instructionText}>
@@ -261,12 +261,12 @@ const GamePage = ({
               {submitted ? (
                 <>
                   <Button style={styles.button} onPress={onNextAction}>
-                    <Text>Next</Text>
+                    <Text style={styles.buttonTxt}>Next</Text>
                   </Button>
                 </>
               ) : (
                 <Button style={styles.button} onPress={onSubmitAction}>
-                  <Text>Submit</Text>
+                  <Text style={styles.buttonTxt}>Submit</Text>
                 </Button>
               )}
             </View>

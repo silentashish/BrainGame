@@ -14,6 +14,7 @@ import {AppHeader, Divider} from '../../Component';
 import {secondaryColor} from '../../Utils';
 import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 
 const viewTime = 25;
 const numberOfItem = 9;
@@ -167,11 +168,14 @@ const GamePage = ({
       <AppHeader title="NumPie" subTitle={`Level ${level}`} />
 
       <Divider small />
-
-      {/* <View style={{flex: 1, justifyContent: 'center'}}> */}
+      {/* <View style={{flex: 0.5}}> */}
       <View style={styles.infoSection}>
-        <InfoView lable={'Problem'}>{problem}/5</InfoView>
-        <InfoView lable={'Score'}>{score}</InfoView>
+        <View style={styles.problemBox}>
+          <InfoView lable={'Problem'}>{problem}/5</InfoView>
+        </View>
+        <View style={styles.problemBox}>
+          <InfoView lable={'Score'}>{score}</InfoView>
+        </View>
       </View>
       {/* </View> */}
 
@@ -179,83 +183,92 @@ const GamePage = ({
 
       {/* timer showing filed lie on top   */}
 
-      {/* <View style={{flex: 0.5, justifyContent: 'center'}}> */}
+      {/* <View style={{flex: 0.5, justifyContent: 'center', overflow: 'scroll'}}> */}
       <TimeView time={time} />
       {/* </View> */}
-      {/* <View style={{flex: 3, justifyContent: 'space-evenly'}}> */}
+      {/* <View
+        style={{flex: 3, justifyContent: 'space-evenly', overflow: 'scroll'}}> */}
       <View style={styles.instruction}>
         <Text style={styles.instructionText}>
           Memorize the number below and enter later.
         </Text>
         <Text style={styles.instructionText}>Watch out for the timer.</Text>
       </View>
+      <View style={styles.animationBox}>
+        <LottieView
+          source={require('../../assets/Animations/looking_owl.json')}
+          autoPlay
+          loop
+          style={styles.animation}
+        />
+      </View>
+      <View style={styles.wrapper}>
+        <View style={styles.boxContainer}>
+          <SafeAreaView style={{flex: 1}}>
+            <FlatList
+              ItemSeparatorComponent={ItemSepretor}
+              extraData={data}
+              numColumns={3}
+              keyExtractor={(item) => item.value.toString()}
+              data={data}
+              renderItem={({item, index}) => (
+                <View
+                  style={[
+                    styles.viewBox,
+                    index === 0
+                      ? styles.leftPad
+                      : index % 2 === 0
+                      ? styles.leftPad
+                      : styles.rightPad,
+                  ]}>
+                  {showTimerEnd ? (
+                    <TextInput
+                      style={[
+                        styles.inputText,
+                        submitted &&
+                          item.value !== parseInt(item.inputvalue) &&
+                          styles.errorStyle,
+                      ]}
+                      keyboardType="numeric"
+                      value={item.inputvalue}
+                      onChangeText={(val) => UpdateValue(val, index)}
+                    />
+                  ) : (
+                    <Text style={styles.txt}>{item.value}</Text>
+                  )}
+                </View>
+              )}
+            />
+          </SafeAreaView>
 
-      <View style={styles.boxContainer}>
-        <SafeAreaView style={{flex: 1}}>
-          <FlatList
-            ItemSeparatorComponent={ItemSepretor}
-            extraData={data}
-            numColumns={3}
-            keyExtractor={(item) => item.value.toString()}
-            data={data}
-            renderItem={({item, index}) => (
-              <View
-                style={[
-                  styles.viewBox,
-                  index === 0
-                    ? styles.leftPad
-                    : index % 2 === 0
-                    ? styles.leftPad
-                    : styles.rightPad,
-                ]}>
-                {showTimerEnd ? (
-                  <TextInput
-                    style={[
-                      styles.inputText,
-                      submitted &&
-                        item.value !== parseInt(item.inputvalue) &&
-                        styles.errorStyle,
-                    ]}
-                    keyboardType="numeric"
-                    value={item.inputvalue}
-                    onChangeText={(val) => UpdateValue(val, index)}
-                  />
-                ) : (
-                  <Text style={styles.txt}>{item.value}</Text>
-                )}
-              </View>
-            )}
-          />
-        </SafeAreaView>
+          {showTimerEnd && submitted && (
+            <>
+              <Divider />
+              <Text style={styles.instructionText}>
+                Total Correct Answer : {scoreLevel}
+              </Text>
+              <Divider />
+            </>
+          )}
 
-        {showTimerEnd && submitted && (
-          <>
-            <Divider />
-            <Text style={styles.instructionText}>
-              Total Correct Answer : {scoreLevel}
-            </Text>
-            <Divider />
-          </>
-        )}
-
-        {showTimerEnd ? (
-          <View style={styles.centerButton}>
-            {submitted ? (
-              <>
-                <Button style={styles.button} onPress={onNextAction}>
-                  <Text>Next</Text>
+          {showTimerEnd ? (
+            <View style={styles.centerButton}>
+              {submitted ? (
+                <>
+                  <Button style={styles.button} onPress={onNextAction}>
+                    <Text style={styles.buttonTxt}>Next</Text>
+                  </Button>
+                </>
+              ) : (
+                <Button style={styles.button} onPress={onSubmitAction}>
+                  <Text style={styles.buttonTxt}>Submit</Text>
                 </Button>
-              </>
-            ) : (
-              <Button style={styles.button} onPress={onSubmitAction}>
-                <Text>Submit</Text>
-              </Button>
-            )}
-          </View>
-        ) : null}
+              )}
+            </View>
+          ) : null}
+        </View>
       </View>
     </View>
-    // </View>
   );
 };
 

@@ -15,6 +15,8 @@ import {secondaryColor} from '../../Utils';
 import {Button, Text, Item, Content, Label} from 'native-base';
 import {useFocusEffect} from '@react-navigation/native';
 import {timeBackgroud} from '../../Utils';
+import LottieView from 'lottie-react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const viewTime = 10;
 const numberOfItem = 6;
@@ -168,92 +170,102 @@ const GamePage = ({
 
       <Divider small />
 
-      {/* <View style={{flex: 1, justifyContent: 'center'}}> */}
       <View style={styles.infoSection}>
-        <InfoView lable={'Problem'}>{problem}/5</InfoView>
-        <InfoView lable={'Score'}>{score}</InfoView>
+        <View style={styles.problemBox}>
+          <InfoView lable={'Problem'}>{problem}/5</InfoView>
+        </View>
+        <View style={styles.problemBox}>
+          <InfoView lable={'Score'}>{score}</InfoView>
+        </View>
       </View>
-      {/* </View> */}
 
       <Divider small />
 
       {/* timer showing filed lie on top   */}
-      {/* <View style={{flex: 0.5, justifyContent: 'center'}}> */}
-      <TimeView time={time} />
-      {/* </View> */}
 
-      {/* <View style={{flex: 3, justifyContent: 'space-evenly'}}> */}
+      <TimeView time={time} />
+
       <View style={styles.instruction}>
         <Text style={styles.instructionText}>
           Memorize the number below and enter later.
         </Text>
         <Text style={styles.instructionText}>Watch out for the timer.</Text>
       </View>
-      <View style={styles.boxContainer}>
-        <SafeAreaView style={{flex: 1}}>
-          <FlatList
-            ItemSeparatorComponent={ItemSepretor}
-            extraData={data}
-            numColumns={3}
-            keyExtractor={(item) => item.value.toString()}
-            data={data}
-            renderItem={({item, index}) => (
-              <View
-                style={[
-                  styles.viewBox,
-                  index === 0
-                    ? styles.leftPad
-                    : index % 2 === 0
-                    ? styles.leftPad
-                    : styles.rightPad,
-                ]}>
-                {showTimerEnd ? (
-                  <TextInput
-                    style={[
-                      styles.inputText,
-                      submitted &&
-                        item.value !== parseInt(item.inputvalue) &&
-                        styles.errorStyle,
-                    ]}
-                    keyboardType="numeric"
-                    value={item.inputvalue}
-                    onChangeText={(val) => UpdateValue(val, index)}
-                  />
-                ) : (
-                  <Text style={styles.txt}>{item.value}</Text>
-                )}
-              </View>
-            )}
+      <View style={styles.wrapper}>
+        <View style={styles.animationBox}>
+          <LottieView
+            source={require('../../assets/Animations/looking_owl.json')}
+            autoPlay
+            loop
+            style={styles.animation}
           />
-        </SafeAreaView>
+        </View>
 
-        {showTimerEnd && submitted && (
-          <>
-            <Divider />
-            <Text style={styles.instructionText}>
-              Total Correct Answer : {scoreLevel}
-            </Text>
-            <Divider />
-          </>
-        )}
+        <View style={styles.boxContainer}>
+          <SafeAreaView style={{flex: 1}}>
+            <FlatList
+              ItemSeparatorComponent={ItemSepretor}
+              extraData={data}
+              numColumns={3}
+              keyExtractor={(item) => item.value.toString()}
+              data={data}
+              renderItem={({item, index}) => (
+                <View
+                  style={[
+                    styles.viewBox,
+                    index === 0
+                      ? styles.leftPad
+                      : index % 2 === 0
+                      ? styles.leftPad
+                      : styles.rightPad,
+                  ]}>
+                  {showTimerEnd ? (
+                    <TextInput
+                      style={[
+                        styles.inputText,
+                        submitted &&
+                          item.value !== parseInt(item.inputvalue) &&
+                          styles.errorStyle,
+                      ]}
+                      keyboardType="numeric"
+                      value={item.inputvalue}
+                      onChangeText={(val) => UpdateValue(val, index)}
+                    />
+                  ) : (
+                    <Text style={styles.txt}>{item.value}</Text>
+                  )}
+                </View>
+              )}
+            />
+          </SafeAreaView>
 
-        {showTimerEnd ? (
-          <View style={styles.centerButton}>
-            {submitted ? (
-              <>
-                <Button style={styles.button} onPress={onNextAction}>
-                  <Text>Next</Text>
+          {showTimerEnd && submitted && (
+            <>
+              <Divider />
+              <Text style={styles.instructionText}>
+                Total Correct Answer : {scoreLevel}
+              </Text>
+              <Divider />
+            </>
+          )}
+
+          {showTimerEnd ? (
+            <View style={styles.centerButton}>
+              {submitted ? (
+                <>
+                  <Button style={styles.button} onPress={onNextAction}>
+                    <Text>Next</Text>
+                  </Button>
+                </>
+              ) : (
+                <Button style={styles.button} onPress={onSubmitAction}>
+                  <Text>Submit</Text>
                 </Button>
-              </>
-            ) : (
-              <Button style={styles.button} onPress={onSubmitAction}>
-                <Text>Submit</Text>
-              </Button>
-            )}
-          </View>
-        ) : null}
+              )}
+            </View>
+          ) : null}
+        </View>
       </View>
-      {/* </View> */}
     </View>
   );
 };

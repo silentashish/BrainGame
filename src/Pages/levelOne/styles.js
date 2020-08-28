@@ -5,6 +5,8 @@ import {
   darkBackgroundColor,
   overlayColor,
   inputBoxColor,
+  infoBox,
+  wrapper,
 } from '../../Utils';
 export default ({level}) => {
   return ScaledSheet.create({
@@ -49,7 +51,8 @@ export default ({level}) => {
         level && level === 1 ? '150@vs' : level === 3 ? '275@vs' : '200@vs',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: '5@s',
+      padding: '10@ms',
+      borderRadius: '15@ms',
     },
     rightPad: {
       marginRight: '5@s',
@@ -75,18 +78,18 @@ export default ({level}) => {
     centerButton: {
       alignItems: 'center',
       justifyContent: 'center',
+      margin: '10@ms',
     },
     errorStyle: {
       borderWidth: 2,
       borderColor: 'red',
     },
     infoBox: {
-      marginTop: '10@ms',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#ff0266',
+      backgroundColor: infoBox,
       borderRadius: '10@ms',
-      padding: '10@ms',
+      padding: '5@ms',
     },
     lable: {
       fontSize: '25@ms',
@@ -116,19 +119,24 @@ export default ({level}) => {
       maxWidth: '90%',
       color: whiteColor,
     },
+
     button: {
-      backgroundColor: '#5c7829',
+      backgroundColor: '#4d51e8',
       borderRadius: '10@ms',
       alignSelf: 'center',
-      margin: '10@ms',
+    },
+    buttonTxt: {
+      fontSize: '18@ms',
+      textTransform: 'capitalize',
     },
 
     wrapper: {
-      backgroundColor: '#27292d',
+      backgroundColor: wrapper,
+      borderRadius: '20@ms',
     },
     animation: {
-      height: '180@vs',
-      width: '150@vs',
+      height: '80@vs',
+      width: '100@vs',
       justifyContent: 'center',
       alignItems: 'center',
     },

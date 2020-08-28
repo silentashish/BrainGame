@@ -6,11 +6,10 @@ export const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    padding: '5@ms',
-    width: '95%',
     backgroundColor: '#404142',
-    marginTop: '10@ms',
-    borderRadius: '5@ms',
+    borderRadius: '3@ms',
+    margin: '5@ms',
+    padding: '3@ms',
   },
   title: {
     fontSize: '16@ms',
@@ -18,7 +17,7 @@ export const styles = ScaledSheet.create({
     color: 'white',
   },
   subTitle: {
-    fontSize: '12@ms',
+    fontSize: '14@ms',
     fontWeight: 'bold',
     color: 'white',
   },
