@@ -172,7 +172,7 @@ const GamePage = ({
 
       <View style={styles.infoSection}>
         <View style={styles.problemBox}>
-          <InfoView lable={'Problem'}>{problem}/5</InfoView>
+          <InfoView lable={'Problem'}>{problem}| 5</InfoView>
         </View>
         <View style={styles.problemBox}>
           <InfoView lable={'Score'}>{score}</InfoView>
