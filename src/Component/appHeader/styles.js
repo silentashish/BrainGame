@@ -8,7 +8,7 @@ export const styles = ScaledSheet.create({
     alignSelf: 'center',
     padding: '5@ms',
     width: '95%',
-    backgroundColor: overlayColor,
+    backgroundColor: '#404142',
     marginTop: '10@ms',
     borderRadius: '5@ms',
   },

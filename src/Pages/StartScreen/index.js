@@ -22,7 +22,7 @@ export default (props) => {
         />
       </View>
       <View style={styles.instructionBox}>
-        <Text style={styles.instructionHead}>Instructions To Play</Text>
+        <Text style={styles.instructionHead}>Instructions To Play: </Text>
         <Text style={styles.instructionText}>Clock ticks</Text>
         <Text style={styles.instructionText}>Memorize Number</Text>
         <Text style={styles.instructionText}>Guess</Text>
