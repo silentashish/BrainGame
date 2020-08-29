@@ -7,7 +7,7 @@ export default (props) => {
   const {onPress, children} = props;
   const styles = _styles();
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, props.style]} onPress={onPress}>
       <Text style={styles.txt}>{children}</Text>
     </TouchableOpacity>
   );

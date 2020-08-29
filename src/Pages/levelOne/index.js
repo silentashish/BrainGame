@@ -7,7 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import {Badge} from 'react-native-elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
 import {
   IncreaseLevel,
@@ -28,6 +28,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 const viewTime = 5;
 const numberOfItem = 3;
 const threshold = 10;
+
+console.disableYellowBox = true;
 
 const TimeView = ({time}) => {
   console.log(time);
@@ -171,10 +173,14 @@ const GamePage = ({
   const ItemSepretor = () => <View style={styles.division} />;
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+        bounces={false}
+        keyboardShouldPersistTaps="handled"
+        style={styles.container}
+      >
       {/* Safe are is for ios and appheader show game name and level */}
-      <SafeAreaView backgroundColor={secondaryColor} opacity={0.95} />
-      <AppHeader title="NumPie" subTitle={`Level ${level}`} />
+      <SafeAreaView backgroundColor={'#1f2023'} opacity={0.95} />
+      <AppHeader title="MemorizeDigits" subTitle={`Level ${level}`} />
 
       <Divider small />
 
@@ -235,6 +241,7 @@ const GamePage = ({
                           styles.errorStyle,
                       ]}
                       keyboardType="numeric"
+                      returnKeyType='done' 
                       value={item.inputvalue}
                       onChangeText={(val) => UpdateValue(val, index)}
                     />
@@ -273,7 +280,7 @@ const GamePage = ({
           ) : null}
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

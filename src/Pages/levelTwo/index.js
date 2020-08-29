@@ -10,6 +10,7 @@ import {
   UpdateValue,
 } from '../../Redux/actions';
 import _styles from '../levelOne/styles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {AppHeader, Divider} from '../../Component';
 import {secondaryColor} from '../../Utils';
 import {Button, Text, Item, Content, Label} from 'native-base';
@@ -21,6 +22,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 const viewTime = 10;
 const numberOfItem = 6;
 const threshold = 20;
+
+console.disableYellowBox = true;
 
 const TimeView = ({time}) => {
   //  import styles here
@@ -163,10 +166,14 @@ const GamePage = ({
   const ItemSepretor = () => <View style={styles.division} />;
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+        bounces={false}
+        keyboardShouldPersistTaps="handled"
+        style={styles.container}
+      >
       {/* Safe are is for ios and appheader show game name and level */}
-      <SafeAreaView backgroundColor={secondaryColor} opacity={0.95} />
-      <AppHeader title="NumPie" subTitle={`Level ${level}`} />
+      <SafeAreaView backgroundColor={'#1f2023'} opacity={0.95} />
+      <AppHeader title="MemorizeDigits" subTitle={`Level ${level}`} />
 
       <Divider small />
 
@@ -266,7 +273,7 @@ const GamePage = ({
           ) : null}
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
 // import {Button} from 'native-base';
 import {styles} from './styles';
 import LottieView from 'lottie-react-native';
@@ -10,8 +10,9 @@ export default (props) => {
   const {navigation} = props;
   return (
     <View style={styles.mainView}>
+      <SafeAreaView backgroundColor={'#b2d9a3'} opacity={0.95} />
       <View style={styles.headerinfo}>
-        <Text style={styles.headerinfoText}>NumPie</Text>
+        <Text style={styles.headerinfoText}>MemorizeDigits</Text>
       </View>
       <View style={styles.animationBox}>
         <LottieView

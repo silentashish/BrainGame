@@ -12,7 +12,7 @@ export const styles = ScaledSheet.create({
     padding: '3@ms',
   },
   title: {
-    fontSize: '16@ms',
+    fontSize: '15@ms',
     fontWeight: 'bold',
     color: 'white',
   },
